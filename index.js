@@ -1,6 +1,8 @@
+// index.js
 const express = require("express");
 const axios = require("axios");
 const app = express();
+require("dotenv").config();
 
 app.use(express.json());
 
@@ -8,8 +10,8 @@ app.get("/get-product", async (req, res) => {
   try {
     const response = await axios.get("https://www.funyard.co.il/api/getproductlist", {
       headers: {
-        Authorization: `Bearer F0E7DDDA-5E8D-4F54-BB18-571267CEF1EE`
-      },
+        "Authorization": `Bearer ${process.env.API_TOKEN}`
+      }
     });
     res.json(response.data);
   } catch (error) {
@@ -17,5 +19,5 @@ app.get("/get-product", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Proxy server running on port ${PORT}`));
+const PORT = process.env.PORT;
+app.listen(PORT, () => console.log(`✅ Proxy server running on port ${PORT}`));
